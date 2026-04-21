@@ -93,3 +93,57 @@ function removeItem(index) {
   localStorage.setItem("cart", JSON.stringify(cart));
   loadCart();
 }
+
+const ORDER_API = "https://script.google.com/macros/s/AKfycbx8L6YgP3bE_4w_95AOpI3mDj5xIuSv-UOXzyCAFupdSfRuKcAYUcvOVaKbVnHphGf3uw/exec";
+
+async function placeOrder() {
+
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+
+  if (!name || !phone || !address) {
+    alert("Please fill all details");
+    return;
+  }
+
+  // Generate Order ID
+  let orderId = "SB-" + Date.now();
+
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.qty;
+  });
+
+  let orderData = {
+    action: "addOrder",
+    orderId: orderId,
+    name: name,
+    phone: phone,
+    address: address,
+    items: JSON.stringify(cart),
+    total: total,
+    status: "Placed",
+    date: new Date().toLocaleString()
+  };
+
+  // Send to Google Sheets
+  let response = await fetch(ORDER_API, {
+    method: "POST",
+    body: JSON.stringify(orderData)
+  });
+
+  let result = await response.text();
+
+  alert("Order Placed Successfully 🎉\nOrder ID: " + orderId);
+
+  localStorage.removeItem("cart");
+  window.location.href = "products.html";
+}
