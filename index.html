@@ -1,46 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandy Bakes | Official Home</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandy Bakes | Luxury Home Bakery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="welcomePopup">
-        <div class="popup-card">
-            <img src="https://sandybakes.github.io/sandy-bakes/images/Logo.jpg" class="logo-img">
-            <h1>Welcome!</h1>
-            <p>Founded by Ms. Sandria Anjali Wenish, we bring you brownies and bakes made with pure love.</p>
-            <button class="btn-main" onclick="closePopup()">View Menu</button>
+    <div id="welcomePopup" class="overlay">
+        <div class="popup-content">
+            <img src="https://sandybakes.github.io/sandy-bakes/images/Logo.jpg" class="popup-logo">
+            <h2>Welcome to Sandy Bakes</h2>
+            <p>Handcrafted with love by <strong>Ms. Sandria ANJALI Wenish</strong> since June 2026.</p>
+            <button class="btn-primary" onclick="closePopup()">Discover Sweets</button>
         </div>
     </div>
 
-    <header>
-        <div class="header-container">
-            <img src="https://sandybakes.github.io/sandy-bakes/images/Logo.jpg" class="logo-img">
-            <div class="brand-titles">
+    <header class="main-header">
+        <div class="header-top">
+            <img src="https://sandybakes.github.io/sandy-bakes/images/Logo.jpg" alt="Logo" class="nav-logo">
+            <div class="brand-info">
+                <span class="pre-title">HOMEMADE & FRESH</span>
                 <h1>SANDY BAKES</h1>
-                <div class="tagline">freshly baked with love</div>
+                <span class="tagline">freshly baked with love</span>
             </div>
-            <nav>
-                <a href="index.html">HOME</a>
-                <a href="products.html">PRODUCTS</a>
-                <a href="cart.html">CART <span id="cart-count">(0)</span></a>
-            </nav>
         </div>
+        <nav class="nav-bar">
+            <a href="index.html" class="active">HOME</a>
+            <a href="products.html">PRODUCTS</a>
+            <a href="cart.html">MY CART <span id="cart-count">0</span></a>
+        </nav>
     </header>
 
-    <section style="text-align: center; padding: 80px 10%; background: linear-gradient(rgba(255,255,255,0.7),rgba(255,255,255,0.7)), url('https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1000'); background-size: cover;">
-        <h2 style="font-size: 2.5rem; color: var(--primary);">Handcrafted Joy Since June 2026</h2>
-        <p style="max-width: 600px; margin: auto;">At Sandy Bakes, our founder <b>Ms. Sandria ANJALI Wenish</b> believes that the best ingredient is care. Specializing in the fudgiest brownies and custom cakes.</p>
-    </section>
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2>The Fudgiest Brownies in Chennai</h2>
+                <p>Taste the care in every bite, baked fresh every single day.</p>
+                <a href="#product-list" class="btn-primary">Shop Bestsellers</a>
+            </div>
+        </section>
 
-    <section class="section-padding" style="padding: 50px 5%;">
-        <h2 style="text-align: center;">Best Sellers</h2>
-        <div class="slider-wrapper" id="product-list"></div>
-    </section>
+        <section class="about-section">
+            <div class="container">
+                <h3>Our Story</h3>
+                <div class="underline"></div>
+                <p>Founded by <strong>Ms. Sandria ANJALI Wenish</strong>, Sandy Bakes is a dream turned into reality. We specialize in premium brownies and custom cakes where every ingredient is chosen for quality. For us, it's not just a business—it's about sharing joy through our oven.</p>
+                <div class="contact-strip">
+                    <a href="mailto:sandybakes2026@gmail.com"><i class="fa fa-envelope"></i> sandybakes2026@gmail.com</a>
+                    <a href="https://www.instagram.com/san.dybakes" target="_blank"><i class="fab fa-instagram"></i> @san.dybakes</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <h3 class="section-title">Signature Treats</h3>
+            <div id="product-list" class="product-grid">
+                <p class="loading">Whipping up your treats...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-item">
+                <h4>Contact</h4>
+                <p>9361373386 / 8610853599</p>
+                <p>sandybakes2026@gmail.com</p>
+            </div>
+            <div class="footer-item">
+                <h4>Visit Us</h4>
+                <p>Choolaimedu, Nungabakkam</p>
+                <p>Chennai - 600034</p>
+            </div>
+            <div class="footer-item">
+                <h4>Follow</h4>
+                <a href="https://www.instagram.com/san.dybakes" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Sandy Bakes | Founder: Ms. Sandria ANJALI Wenish
+        </div>
+    </footer>
 
     <script src="app.js"></script>
 </body>
