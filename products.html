@@ -2,25 +2,63 @@
 <html>
 <head>
   <title>Products</title>
-  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<div class="navbar">
-  <h2>Sandy Bakes 🍰</h2>
+<h2>Products</h2>
 
-  <div>
-    <a href="index.html">Home</a>
-    <a href="cart.html" class="cart">🛒 <span id="cartCount">0</span></a>
-  </div>
-</div>
+<div id="products">Loading...</div>
 
-<h2 style="text-align:center;">Our Products</h2>
+<script>
 
-<div id="products"></div>
+const API = "https://script.google.com/macros/s/AKfycbx8L6YgP3bE_4w_95AOpI3mDj5xIuSv-UOXzyCAFupdSfRuKcAYUcvOVaKbVnHphGf3uw/exec?action=getProducts";
 
-<script src="js/app.js"></script>
+async function loadProducts() {
+
+  try {
+
+    let res = await fetch(API);
+    let data = await res.json();
+
+    console.log(data); // DEBUG
+
+    let div = document.getElementById("products");
+    div.innerHTML = "";
+
+    // 🔥 FIX: handle both formats
+    if (data.status === "error") {
+      div.innerHTML = "Error: " + data.message;
+      return;
+    }
+
+    let products = Array.isArray(data) ? data : data;
+
+    if (products.length === 0) {
+      div.innerHTML = "No products found";
+      return;
+    }
+
+    products.forEach(p => {
+      div.innerHTML += `
+        <div>
+          <img src="${p.image}" width="150"><br>
+          <b>${p.name}</b><br>
+          ₹${p.finalPrice}<br>
+        </div>
+        <hr>
+      `;
+    });
+
+  } catch (err) {
+    document.getElementById("products").innerText = "Error loading products";
+    console.error(err);
+  }
+}
+
+loadProducts();
+
+</script>
 
 </body>
 </html>
