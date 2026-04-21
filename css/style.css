@@ -12,3 +12,11 @@ body {
   background: white;
   width: 200px;
 }
+button {
+  padding: 5px 10px;
+  margin: 5px;
+  background: #C62828;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
