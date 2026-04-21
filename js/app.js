@@ -1,48 +1,48 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbx8L6YgP3bE_4w_95AOpI3mDj5xIuSv-UOXzyCAFupdSfRuKcAYUcvOVaKbVnHphGf3uw/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbx8L6YgP3bE_4w_95AOpI3mDj5xIuSv-UOXzyCAFupdSfRuKcAYUcvOVaKbVnHphGf3uw/exec?action=getProducts";
 
+const ORDER_API = "https://script.google.com/macros/s/AKfycbx8L6YgP3bE_4w_95AOpI3mDj5xIuSv-UOXzyCAFupdSfRuKcAYUcvOVaKbVnHphGf3uw/exec";
+
+// 🔹 LOAD PRODUCTS
 async function loadProducts() {
   const res = await fetch(API_URL);
   const products = await res.json();
 
   let container = document.getElementById("products");
+  if (!container) return;
+
   container.innerHTML = "";
 
   products.forEach(p => {
-    if (p.status === "Active") {
-      container.innerHTML += `
-        <div class="card">
-          <img src="${p.image}" width="150"/>
-          <h3>${p.name}</h3>
-          <p>₹${p.finalPrice}</p>
-          <button onclick="addToCart('${p.id}')">Add to Cart</button>
-        </div>
-      `;
-    }
+    container.innerHTML += `
+      <div class="card">
+        <img src="${p.image}">
+        <h3>${p.name}</h3>
+        <p>₹${p.finalPrice}</p>
+        <button onclick="addToCart('${p.id}','${p.name}',${p.finalPrice})">Add to Cart</button>
+      </div>
+    `;
   });
 }
 
 loadProducts();
 
-function addToCart(id) {
+// 🔹 ADD TO CART
+function addToCart(id, name, price) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // find product from current list
-  const productCard = event.target.parentElement;
-  const name = productCard.querySelector("h3").innerText;
-  const price = parseInt(productCard.querySelector("p").innerText.replace("₹", ""));
+  let item = cart.find(i => i.id === id);
 
-  let existing = cart.find(item => item.id === id);
-
-  if (existing) {
-    existing.qty += 1;
+  if (item) {
+    item.qty++;
   } else {
     cart.push({ id, name, price, qty: 1 });
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-
   alert("Added to cart 🛒");
 }
+
+// 🔹 LOAD CART
 function loadCart() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -59,11 +59,10 @@ function loadCart() {
         <h3>${item.name}</h3>
         <p>₹${item.price}</p>
 
-        <button onclick="changeQty(${index}, -1)">-</button>
+        <button onclick="changeQty(${index},-1)">-</button>
         ${item.qty}
-        <button onclick="changeQty(${index}, 1)">+</button>
+        <button onclick="changeQty(${index},1)">+</button>
 
-        <br><br>
         <button onclick="removeItem(${index})">Remove</button>
       </div>
     `;
@@ -72,19 +71,19 @@ function loadCart() {
   document.getElementById("total").innerText = "Total: ₹" + total;
 }
 
+// 🔹 CHANGE QTY
 function changeQty(index, change) {
   let cart = JSON.parse(localStorage.getItem("cart"));
 
   cart[index].qty += change;
 
-  if (cart[index].qty <= 0) {
-    cart.splice(index, 1);
-  }
+  if (cart[index].qty <= 0) cart.splice(index, 1);
 
   localStorage.setItem("cart", JSON.stringify(cart));
   loadCart();
 }
 
+// 🔹 REMOVE ITEM
 function removeItem(index) {
   let cart = JSON.parse(localStorage.getItem("cart"));
 
@@ -94,55 +93,45 @@ function removeItem(index) {
   loadCart();
 }
 
-const ORDER_API = "https://script.google.com/macros/s/AKfycbx8L6YgP3bE_4w_95AOpI3mDj5xIuSv-UOXzyCAFupdSfRuKcAYUcvOVaKbVnHphGf3uw/exec";
-
+// 🔹 PLACE ORDER
 async function placeOrder() {
 
   let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
   let address = document.getElementById("address").value;
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  if (cart.length === 0) {
-    alert("Cart is empty!");
+  if (!name || !email || !phone || !address) {
+    alert("Fill all details");
     return;
   }
 
-  if (!name || !phone || !address) {
-    alert("Please fill all details");
-    return;
-  }
-
-  // Generate Order ID
   let orderId = "SB-" + Date.now();
 
   let total = 0;
-  cart.forEach(item => {
-    total += item.price * item.qty;
-  });
+  cart.forEach(i => total += i.price * i.qty);
 
-  let orderData = {
+  let data = {
     action: "addOrder",
-    orderId: orderId,
-    name: name,
-    phone: phone,
-    address: address,
+    orderId,
+    name,
+    email,
+    phone,
+    address,
     items: JSON.stringify(cart),
-    total: total,
+    total,
     status: "Placed",
     date: new Date().toLocaleString()
   };
 
-  // Send to Google Sheets
-  let response = await fetch(ORDER_API, {
+  await fetch(ORDER_API, {
     method: "POST",
-    body: JSON.stringify(orderData)
+    body: JSON.stringify(data)
   });
 
-  let result = await response.text();
-
-  alert("Order Placed Successfully 🎉\nOrder ID: " + orderId);
+  alert("Order placed 🎉");
 
   localStorage.removeItem("cart");
   window.location.href = "products.html";
