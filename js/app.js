@@ -22,3 +22,24 @@ async function loadProducts() {
 }
 
 loadProducts();
+
+function addToCart(id) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // find product from current list
+  const productCard = event.target.parentElement;
+  const name = productCard.querySelector("h3").innerText;
+  const price = parseInt(productCard.querySelector("p").innerText.replace("₹", ""));
+
+  let existing = cart.find(item => item.id === id);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id, name, price, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("Added to cart 🛒");
+}
