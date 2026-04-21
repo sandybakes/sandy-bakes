@@ -43,3 +43,53 @@ function addToCart(id) {
 
   alert("Added to cart 🛒");
 }
+function loadCart() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let container = document.getElementById("cartItems");
+  let total = 0;
+
+  container.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+
+    container.innerHTML += `
+      <div class="card">
+        <h3>${item.name}</h3>
+        <p>₹${item.price}</p>
+
+        <button onclick="changeQty(${index}, -1)">-</button>
+        ${item.qty}
+        <button onclick="changeQty(${index}, 1)">+</button>
+
+        <br><br>
+        <button onclick="removeItem(${index})">Remove</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = "Total: ₹" + total;
+}
+
+function changeQty(index, change) {
+  let cart = JSON.parse(localStorage.getItem("cart"));
+
+  cart[index].qty += change;
+
+  if (cart[index].qty <= 0) {
+    cart.splice(index, 1);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  loadCart();
+}
+
+function removeItem(index) {
+  let cart = JSON.parse(localStorage.getItem("cart"));
+
+  cart.splice(index, 1);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  loadCart();
+}
