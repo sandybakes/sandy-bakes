@@ -1,91 +1,587 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandy Bakes | Luxury Home Bakery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sandy Bakes | Homemade & Fresh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #fffaf7;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 700;
+      color: #7b341e;
+    }
+
+    .logo span {
+      color: #ff7f50;
+    }
+
+    nav a {
+      text-decoration: none;
+      margin-left: 25px;
+      color: #333;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff7f50;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 120px 8% 60px;
+      background: linear-gradient(to right, #fff4ef, #fffaf7);
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 320px;
+      animation: slideLeft 1.2s ease;
+    }
+
+    .hero-text h1 {
+      font-size: 65px;
+      line-height: 1.2;
+      color: #7b341e;
+    }
+
+    .hero-text h1 span {
+      color: #ff7f50;
+    }
+
+    .hero-text p {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .hero-buttons {
+      margin-top: 35px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.4s ease;
+      margin-right: 15px;
+    }
+
+    .primary-btn {
+      background: #ff7f50;
+      color: white;
+      box-shadow: 0 10px 25px rgba(255,127,80,0.3);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-4px);
+      background: #ff5f2e;
+    }
+
+    .secondary-btn {
+      border: 2px solid #ff7f50;
+      color: #ff7f50;
+    }
+
+    .secondary-btn:hover {
+      background: #ff7f50;
+      color: white;
+    }
+
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .hero-image img {
+      width: 500px;
+      max-width: 100%;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    section {
+      padding: 90px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+      font-size: 42px;
+      color: #7b341e;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #666;
+      font-size: 17px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 25px;
+      overflow: hidden;
+      transition: 0.4s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .product-card:hover {
+      transform: translateY(-12px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .product-content {
+      padding: 22px;
+    }
+
+    .product-content h3 {
+      color: #7b341e;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      color: #ff7f50;
+      font-size: 22px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    .about {
+      background: #fff3ec;
+    }
+
+    .about-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+
+    .about-image img {
+      width: 500px;
+      max-width: 100%;
+      border-radius: 25px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .about-text h2 {
+      font-size: 42px;
+      color: #7b341e;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .stat-box {
+      background: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+      transition: 0.4s;
+    }
+
+    .stat-box:hover {
+      transform: scale(1.05);
+    }
+
+    .stat-box h3 {
+      font-size: 42px;
+      color: #ff7f50;
+      margin-bottom: 10px;
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+      gap: 40px;
+    }
+
+    .contact-info {
+      background: white;
+      padding: 35px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .contact-info h3 {
+      margin-bottom: 20px;
+      color: #7b341e;
+    }
+
+    .contact-info p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    .contact-form {
+      background: white;
+      padding: 35px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .contact-form textarea {
+      height: 140px;
+      resize: none;
+    }
+
+    footer {
+      background: #7b341e;
+      color: white;
+      text-align: center;
+      padding: 30px 8%;
+    }
+
+    footer h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    footer p {
+      color: rgba(255,255,255,0.8);
+      margin-top: 10px;
+    }
+
+    .floating-order {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #ff7f50;
+      color: white;
+      padding: 16px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(255,127,80,0.4);
+      animation: pulse 2s infinite;
+      z-index: 1000;
+    }
+
+    @keyframes slideLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.08);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @media(max-width: 992px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text h1 {
+        font-size: 48px;
+      }
+
+      nav {
+        display: none;
+      }
+    }
+
+    @media(max-width: 600px) {
+      .hero-text h1 {
+        font-size: 38px;
+      }
+
+      .section-title h2,
+      .about-text h2 {
+        font-size: 32px;
+      }
+
+      .btn {
+        margin-bottom: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div id="welcomePopup" class="overlay">
-        <div class="popup-content">
-            <img src="https://sandybakes.github.io/sandy-bakes/images/Logo.jpg" class="popup-logo">
-            <h2>Welcome to Sandy Bakes</h2>
-            <p>Handcrafted with love by <strong>Ms. Sandria ANJALI Wenish</strong> since June 2026.</p>
-            <button class="btn-primary" onclick="closePopup()">Discover Sweets</button>
-        </div>
+<header>
+  <div class="logo">Sandy <span>Bakes</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-text">
+    <h1>Freshly Baked <span>Happiness</span> Everyday 🎂</h1>
+    <p>
+      Welcome to Sandy Bakes — your destination for delicious homemade cakes, brownies, pastries, cookies, and custom celebration cakes made with love and premium ingredients.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#products" class="btn primary-btn">Explore Menu</a>
+      <a href="#contact" class="btn secondary-btn">Order Now</a>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200&auto=format&fit=crop" alt="Cake">
+  </div>
+</section>
+
+<section id="products">
+  <div class="section-title">
+    <h2>Our Best Sellers</h2>
+    <p>Freshly baked favorites loved by our customers</p>
+  </div>
+
+  <div class="products-grid">
+
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?q=80&w=1200&auto=format&fit=crop" alt="Chocolate Cake">
+      <div class="product-content">
+        <h3>Chocolate Truffle Cake</h3>
+        <p>Rich chocolate layers with creamy ganache frosting.</p>
+        <div class="price">₹699</div>
+      </div>
     </div>
 
-    <header class="main-header">
-        <div class="header-top">
-            <img src="https://sandybakes.github.io/sandy-bakes/images/Logo.jpg" alt="Logo" class="nav-logo">
-            <div class="brand-info">
-                <span class="pre-title">HOMEMADE & FRESH</span>
-                <h1>SANDY BAKES</h1>
-                <span class="tagline">freshly baked with love</span>
-            </div>
-        </div>
-        <nav class="nav-bar">
-            <a href="index.html" class="active">HOME</a>
-            <a href="products.html">PRODUCTS</a>
-            <a href="cart.html">MY CART <span id="cart-count">0</span></a>
-        </nav>
-    </header>
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=1200&auto=format&fit=crop" alt="Cupcakes">
+      <div class="product-content">
+        <h3>Vanilla Cupcakes</h3>
+        <p>Soft vanilla cupcakes topped with creamy frosting.</p>
+        <div class="price">₹349</div>
+      </div>
+    </div>
 
-    <main>
-        <section class="hero-section">
-            <div class="hero-content">
-                <h2>The Fudgiest Brownies in Chennai</h2>
-                <p>Taste the care in every bite, baked fresh every single day.</p>
-                <a href="#product-list" class="btn-primary">Shop Bestsellers</a>
-            </div>
-        </section>
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1200&auto=format&fit=crop" alt="Brownies">
+      <div class="product-content">
+        <h3>Fudge Brownies</h3>
+        <p>Moist chocolate brownies loaded with cocoa goodness.</p>
+        <div class="price">₹299</div>
+      </div>
+    </div>
 
-        <section class="about-section">
-            <div class="container">
-                <h3>Our Story</h3>
-                <div class="underline"></div>
-                <p>Founded by <strong>Ms. Sandria ANJALI Wenish</strong>, Sandy Bakes is a dream turned into reality. We specialize in premium brownies and custom cakes where every ingredient is chosen for quality. For us, it's not just a business—it's about sharing joy through our oven.</p>
-                <div class="contact-strip">
-                    <a href="mailto:sandybakes2026@gmail.com"><i class="fa fa-envelope"></i> sandybakes2026@gmail.com</a>
-                    <a href="https://www.instagram.com/san.dybakes" target="_blank"><i class="fab fa-instagram"></i> @san.dybakes</a>
-                </div>
-            </div>
-        </section>
+  </div>
+</section>
 
-        <section class="container">
-            <h3 class="section-title">Signature Treats</h3>
-            <div id="product-list" class="product-grid">
-                <p class="loading">Whipping up your treats...</p>
-            </div>
-        </section>
-    </main>
+<section class="about" id="about">
+  <div class="about-container">
 
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-item">
-                <h4>Contact</h4>
-                <p>9361373386 / 8610853599</p>
-                <p>sandybakes2026@gmail.com</p>
-            </div>
-            <div class="footer-item">
-                <h4>Visit Us</h4>
-                <p>Choolaimedu, Nungabakkam</p>
-                <p>Chennai - 600034</p>
-            </div>
-            <div class="footer-item">
-                <h4>Follow</h4>
-                <a href="https://www.instagram.com/san.dybakes" class="social-icon"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 Sandy Bakes | Founder: Ms. Sandria ANJALI Wenish
-        </div>
-    </footer>
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1519864600265-abb23847ef2c?q=80&w=1200&auto=format&fit=crop" alt="Bakery">
+    </div>
 
-    <script src="app.js"></script>
+    <div class="about-text">
+      <h2>About Sandy Bakes</h2>
+      <p>
+        Sandy Bakes is a homemade bakery brand focused on creating premium quality cakes and desserts with freshness, creativity, and love. Every dessert is handcrafted carefully to make your celebrations memorable.
+      </p>
+
+      <p>
+        From birthdays to weddings and special occasions, we create customized cakes designed exactly for your dream celebration.
+      </p>
+
+      <a href="#contact" class="btn primary-btn">Contact Us</a>
+    </div>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat-box">
+      <h3>500+</h3>
+      <p>Happy Customers</p>
+    </div>
+
+    <div class="stat-box">
+      <h3>100+</h3>
+      <p>Custom Cakes</p>
+    </div>
+
+    <div class="stat-box">
+      <h3>4.9★</h3>
+      <p>Customer Rating</p>
+    </div>
+
+    <div class="stat-box">
+      <h3>24/7</h3>
+      <p>Online Support</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-title">
+    <h2>Contact & Orders</h2>
+    <p>Place your customized cake order today</p>
+  </div>
+
+  <div class="contact-container">
+
+    <div class="contact-info">
+      <h3>Get In Touch</h3>
+      <p><strong>📍 Location:</strong> Chennai, India</p>
+      <p><strong>📞 Phone:</strong> +91 98765 43210</p>
+      <p><strong>📧 Email:</strong> sandybakes2026@gmail.com</p>
+      <p><strong>🕒 Working Hours:</strong> 9 AM - 10 PM</p>
+    </div>
+
+    <div class="contact-form">
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <input type="text" placeholder="Phone Number" required>
+        <textarea placeholder="Write your custom cake requirement..."></textarea>
+        <button type="submit" class="btn primary-btn">Send Order Request</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <h3>Sandy Bakes 🎂</h3>
+  <p>Homemade Fresh Cakes • Crafted with Love</p>
+  <p>© 2026 Sandy Bakes. All Rights Reserved.</p>
+</footer>
+
+<a href="#contact" class="floating-order">🎂 Order Now</a>
+
+<script>
+  const cards = document.querySelectorAll('.product-card');
+
+  window.addEventListener('scroll', () => {
+    cards.forEach(card => {
+      const cardTop = card.getBoundingClientRect().top;
+
+      if(cardTop < window.innerHeight - 100) {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }
+    });
+  });
+
+  cards.forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(50px)';
+    card.style.transition = '0.8s ease';
+  });
+</script>
+
 </body>
 </html>
